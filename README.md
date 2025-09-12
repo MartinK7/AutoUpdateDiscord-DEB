@@ -1,46 +1,55 @@
 # Automatic Discord Update
 
-This repository contains a Bash script and a service file to automatically update Discord on Linux systems.
+This repository provides a complete solution to automatically update Discord on Linux systems using a systemd service. A `.deb` package is available in the GitHub releases for easy installation.
 
-## Usage
+## Installation
 
-### Download and Installation
+### Using the GitHub Release
 
-1. Copy the bash script wherever you want, I recommend in the /opt directory, which is designed for this purpose. 
-
-2. Modify the service file to make it execute the script you've copied with the correct path.
-
-3. Copy the service file to /etc/systemd/system/
-
-
-### Service Activation
-
-You can enable the updater with the following command:
+1. Download the latest `.deb` package from the [Releases](https://github.com/yourusername/your-repo/releases) page.  
+2. Install the package:
 
 ```bash
-sudo systemctl enable update-discord.service
+sudo dpkg -i discord-updater_1.0.1.deb
+````
+
+The installation automatically copies the script and service to the correct locations, enables the service, and starts it.
+
+### Uninstallation
+
+To remove the package:
+
+```bash
+sudo apt remove discord-updater
 ```
 
-### Starting the Service
-
-You can also manually start the service with the following command:
+To completely purge all files:
 
 ```bash
+sudo apt purge discord-updater
+```
+
+## Building the DEB Package
+
+If you want to build the `.deb` package yourself:
+
+1. Make sure `update_discord.sh` and `update-discord.service` are in the repository root.
+2. Run the build script:
+
+```bash
+./make_deb.sh
+```
+
+This will create `discord-updater_1.0.1.deb` in the same directory.
+
+## Service Management
+
+Once installed via the `.deb`, the systemd service runs automatically.
+You can manage it with standard systemctl commands:
+
+```bash
+sudo systemctl status update-discord.service
 sudo systemctl restart update-discord.service
-```
-
-### Stopping the Service
-
-If necessary, you can stop the service with the following command:
-
-```bash
 sudo systemctl stop update-discord.service
-```
-
-### Disabling the Service
-
-If you wish to disable the service, use the following command:
-
-```bash
 sudo systemctl disable update-discord.service
 ```
