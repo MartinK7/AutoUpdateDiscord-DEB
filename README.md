@@ -6,7 +6,7 @@ This repository provides a complete solution to automatically update Discord on 
 
 ### Using the GitHub Release
 
-1. Download the latest `.deb` package from the [Releases](https://github.com/yourusername/your-repo/releases) page.  
+1. Download the latest `.deb` package from the [Releases](https://github.com/MartinK7/AutoUpdateDiscord-DEB/releases) page.  
 2. Install the package:
 
 ```bash
