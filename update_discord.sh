@@ -13,6 +13,25 @@ get_latest_version() {
     echo $download_url
 }
 
+# Wait for dpkg lock with 15 min timeout
+wait_for_dpkg_lock() {
+    local timeout=900
+    local interval=5
+    local waited=0
+
+    echo "Checking for dpkg lock (timeout: $timeout seconds)..."
+    while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 || \
+          sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do
+        if [ $waited -ge $timeout ]; then
+            echo "Timeout reached. Could not acquire dpkg lock after $timeout seconds."
+            exit 1
+        fi
+        echo "dpkg is locked, waiting..."
+        sleep $interval
+        waited=$((waited + interval))
+    done
+}
+
 # Function to download and install the latest version of Discord
 update_discord() {
     local download_url=$1
@@ -28,6 +47,8 @@ update_discord() {
 
     if [ -f $download_path ]; then
         echo "Installing the new version of Discord..."
+        wait_for_dpkg_lock
+        sudo pkill Discord
         sudo dpkg -i $download_path
         rm $download_path
 
