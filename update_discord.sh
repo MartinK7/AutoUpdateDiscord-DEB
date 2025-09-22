@@ -48,7 +48,8 @@ update_discord() {
     if [ -f $download_path ]; then
         echo "Installing the new version of Discord..."
         wait_for_dpkg_lock
-        sudo pkill Discord
+        sudo pkill -9 -x Discord 2>/dev/null || true
+        sudo pkill -9 -x discord 2>/dev/null || true
         sudo dpkg -i $download_path
         rm $download_path
 

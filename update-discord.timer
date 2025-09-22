@@ -1,0 +1,10 @@
+[Unit]
+Description=Run update-discord.service every minute
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+Unit=update-discord.service
+
+[Install]
+WantedBy=timers.target
