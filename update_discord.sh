@@ -25,7 +25,7 @@ get_latest_version() {
             return 0
         fi
 
-        echo "Failed to get latest version. Retrying in 5 seconds..."
+        echo "Failed to get latest version. Retrying in 5 seconds..." >&2
         sleep 5
     done
 

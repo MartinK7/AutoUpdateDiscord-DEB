@@ -2,7 +2,7 @@
 set -e
 
 PKG_NAME="discord-updater"
-VERSION="1.0.4"
+VERSION="1.0.5"
 BUILD_DIR="${PKG_NAME}_${VERSION}"
 
 # Cleanup old builds
