@@ -10,7 +10,7 @@ This repository provides a complete solution to automatically update Discord on 
 2. Install the package:
 
 ```bash
-sudo dpkg -i discord-updater_1.0.5.deb
+sudo dpkg -i discord-updater_1.0.6.deb
 ````
 
 The installation automatically copies the script and service to the correct locations, enables the service, and starts it.
@@ -40,7 +40,7 @@ If you want to build the `.deb` package yourself:
 ./make_deb.sh
 ```
 
-This will create `discord-updater_1.0.1.deb` in the same directory.
+This will create `discord-updater_1.0.6.deb` in the same directory.
 
 ## Service Management
 

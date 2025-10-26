@@ -12,9 +12,8 @@ get_installed_version() {
 get_latest_version() {
     local latest_version_url="https://discord.com/api/download/stable?platform=linux&format=deb"
     local download_url=""
-    local timeout=$((SECONDS + 180))  # 3 minutes from now
 
-    while [ $SECONDS -lt $timeout ]; do
+    while true; do
         download_url=$(curl -sI "$latest_version_url" \
             | grep -i '^location' \
             | awk '{print $2}' \
@@ -34,19 +33,14 @@ get_latest_version() {
 }
 
 
-# Wait for dpkg lock with 15 min timeout
+# Wait for dpkg lock
 wait_for_dpkg_lock() {
-    local timeout=900
     local interval=5
     local waited=0
 
-    echo "Checking for dpkg lock (timeout: $timeout seconds)..."
+    echo "Checking for dpkg lock..."
     while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 || \
           sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do
-        if [ $waited -ge $timeout ]; then
-            echo "Timeout reached. Could not acquire dpkg lock after $timeout seconds."
-            exit 1
-        fi
         echo "dpkg is locked, waiting..."
         sleep $interval
         waited=$((waited + interval))
